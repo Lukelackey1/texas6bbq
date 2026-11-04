@@ -291,6 +291,10 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
 .special p b{color:var(--pit-fg)}
 .special .btns{margin-top:6px}
 .special-card{border-color:transparent}
+.special.solo{grid-template-columns:1fr}
+.special.solo p{max-width:62ch}
+.mtable.two-col td:nth-child(3),.mtable.two-col th:nth-child(3){display:none}
+.mtable.two-col td.p,.mtable.two-col th:nth-child(2){text-align:right}
 .mtable td small.inl{display:inline;margin-left:6px}
 @media (max-width:760px){.special{grid-template-columns:1fr;padding:22px 18px;gap:20px}}
 </style>
@@ -349,14 +353,14 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
     <div class="wrap">
       <div class="head"><div><span class="label eyebrow">Catering menu</span><h2 class="h2" data-edit="menu_heading" data-label="Menu heading" data-section="Menu">How to order</h2></div>
         <p data-edit="menu_intro" data-label="Menu intro" data-section="Menu">Our Thanksgiving menu is below. Lock your dates in now.</p></div>
-      <div class="special" id="special" hidden>
+      <div class="special" id="special">
         <div class="special-copy">
           <span class="label special-tag" data-edit="special_label" data-label="Special label" data-section="Holiday special">Holiday special</span>
           <h3 data-edit="special_heading" data-label="Special heading" data-section="Holiday special">It’s turkey time!</h3>
-          <p data-edit="special_text" data-label="Special details" data-section="Holiday special" data-multiline>Let us smoke the meat for your Thanksgiving dinner.</p>
+          <p data-edit="special_text" data-label="Special details" data-section="Holiday special" data-multiline>Let us smoke the meat for your Thanksgiving dinner. Want the best turkey your in-laws have ever had?<br><b>Hot and ready pickup at 10am and 3pm on Thanksgiving Day.</b></p>
           <div class="btns"><a class="btn red" href="tel:+19796273285">Call Casey</a><a class="btn line" href="#estimate">Get an estimate</a></div>
         </div>
-        <div class="menu-card special-card"><table class="mtable"><tbody id="specialBody"></tbody></table></div>
+        <div class="menu-card special-card" id="specialCard" hidden><table class="mtable"><tbody id="specialBody"></tbody></table></div>
       </div>
       <div class="steps">
         <div class="stepblk" id="stepMeats">
@@ -366,7 +370,7 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
             <p class="why" data-edit="step1_text" data-label="Step 1 text" data-section="Menu" data-multiline>Get it whole to feed a crowd, or by the half and the pound for the family.</p>
             <div class="menu-card">
               <div style="overflow-x:auto"><table class="mtable">
-                <thead><tr><th>Meat</th><th>Whole</th><th>Half / by the lb</th></tr></thead>
+                <thead><tr><th>Meat</th><th id="thWhole">Whole</th><th id="thHalf">Half / by the lb</th></tr></thead>
                 <tbody id="meatsBody">
                   <tr><td>Brisket</td><td class="p">$200<small>10+ lbs</small></td><td class="p">$100<small>half, or $28/lb</small></td></tr>
                   <tr><td>Pulled Pork</td><td class="p">$80<small>8+ lbs</small></td><td class="p">$15<small>per lb</small></td></tr>
@@ -495,7 +499,7 @@ True Texas smoked BBQ.</p></div>
   <div class="f-serve"><span class="label">Serving</span><p>Waco, Texas</p><p><a href="https://www.facebook.com/profile.php?id=100092064403815">Facebook</a></p></div>
   <div class="fine">© 2026 Texas 6 BBQ · Waco, TX</div>
 </div></footer>
-<script src="assets/config.js"></script>
-<script src="assets/site.js"></script>
+<script src="assets/config.js?v=1793816125"></script>
+<script src="assets/site.js?v=1793816125"></script>
 </body>
 </html>

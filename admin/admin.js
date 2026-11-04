@@ -29,7 +29,7 @@
   $('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     $('liErr').textContent = ''; $('liBtn').disabled = true; $('liBtn').textContent = 'Signing in…';
-    var r = await sb.auth.signInWithPassword({ email: CFG.adminEmail, password: $('liPass').value });
+    var r = await sb.auth.signInWithPassword({ email: CFG.adminEmail || 'admin@texas6bbq.site', password: $('liPass').value });
     $('liBtn').disabled = false; $('liBtn').textContent = 'Sign in';
     if (r.error) { $('liErr').textContent = r.error.message === 'Invalid login credentials' ? 'That password isn’t right. Check it and try again.' : r.error.message; return; }
     enter();

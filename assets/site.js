@@ -24,11 +24,11 @@
   var state = {
     phone: '(979) 627-3285',
     menu: [
-      { category: 'special', name: 'Whole Brisket', whole_price: 200, whole_note: '12–16 lb' },
-      { category: 'special', name: 'Whole Turkey', whole_price: 75, whole_note: '16–20 lb bird' },
-      { category: 'special', name: 'Pork Tenderloin', whole_price: 80, whole_note: '7–9 lb' },
-      { category: 'special', name: 'Turkey Breast', whole_price: 60, whole_note: '3 lb' },
-      { category: 'special', name: 'Mac-n-Cheese', whole_price: 36, whole_note: '½ pan' }
+      { category: 'meat', name: 'Whole Brisket', whole_price: 200, whole_note: '12–16 lb' },
+      { category: 'meat', name: 'Whole Turkey', whole_price: 75, whole_note: '16–20 lb bird' },
+      { category: 'meat', name: 'Pork Tenderloin', whole_price: 80, whole_note: '7–9 lb' },
+      { category: 'meat', name: 'Turkey Breast', whole_price: 60, whole_note: '3 lb' },
+      { category: 'side', name: 'Mac-n-Cheese', whole_price: 36, whole_note: 'half pan' }
     ]  };
   var digits = function () { return state.phone.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, ''); };
 
@@ -132,7 +132,12 @@
     var meats = state.menu.filter(function (m) { return m.category === 'meat'; });
     var sides = state.menu.filter(function (m) { return m.category === 'side'; });
     var specials = state.menu.filter(function (m) { return m.category === 'special'; });
-    $('special').hidden = !specials.length;
+    $('specialCard').hidden = !specials.length;
+    $('special').classList.toggle('solo', !specials.length);
+    // With no half or per-lb prices, the meats table drops its third column.
+    var twoCol = !meats.some(function (m) { return has(m.half_price) || has(m.lb_price); });
+    $('meatsBody').closest('table').classList.toggle('two-col', twoCol);
+    $('thWhole').textContent = twoCol ? 'Price' : 'Whole';
     $('specialBody').innerHTML = specials.map(function (m) {
       return '<tr><td>' + esc(m.name) + (m.whole_note ? '<small>' + esc(m.whole_note) + '</small>' : '') + '</td><td class="p r">' + (has(m.whole_price) ? money(m.whole_price) : '—') + '</td></tr>';
     }).join('');
@@ -226,6 +231,7 @@
 
   /* ---------- Text from the admin portal ---------- */
   function applyText(map) {
+    if (Object.prototype.hasOwnProperty.call(map, 'special_heading')) $('special').hidden = !String(map.special_heading).trim();
     document.querySelectorAll('[data-edit]').forEach(function (el) {
       var k = el.getAttribute('data-edit');
       if (Object.prototype.hasOwnProperty.call(map, k)) el.innerHTML = rich(map[k]);
