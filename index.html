@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Texas 6 BBQ | True Texas Smoked BBQ in Waco, TX</title>
+<meta name="description" content="Family owned and operated. True Texas smoked BBQ catering and delivery in Waco, Texas. Call or text Casey at (979) 627-3285.">
+<meta property="og:title" content="Texas 6 BBQ">
+<meta property="og:description" content="True Texas smoked BBQ catering and delivery in Waco, TX. Family owned and operated.">
+<meta property="og:image" content="img/brisket-sliced.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0f0d0d">
+<link rel="icon" type="image/svg+xml" href="img/tx6-icon.svg">
+<style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;500;700;800&family=Archivo+Narrow:wght@600;700&display=swap">
+<style>
+:root{
+  --paper:#f4efe7; --paper-2:#ebe3d6; --card:#fffdf9;
+  --ink:#151212; --ink-soft:#5e5450; --rule:rgba(21,18,18,.16);
+  --pit:#0f0d0d; --pit-2:#1d1918; --pit-fg:#f6f1ea; --pit-soft:rgba(246,241,234,.72);
+  --red:#a8201f; --red-hi:#c8302c; --red-on-dark:#e0544b;
+  --display:"Alfa Slab One", "Rockwell Extra Bold", "Rockwell", Georgia, serif;
+  --body:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --label:"Archivo Narrow", "Arial Narrow", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#161312;--paper-2:#1f1a18;--card:#221d1b;--ink:#f3ece4;--ink-soft:#bcaea6;--rule:rgba(243,236,228,.15);
+  --pit:#0b0909;--pit-2:#171312;--red:#d8443d;--red-hi:#ea5a51;--red-on-dark:#ea5a51;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#161312;--paper-2:#1f1a18;--card:#221d1b;--ink:#f3ece4;--ink-soft:#bcaea6;--rule:rgba(243,236,228,.15);
+  --pit:#0b0909;--pit-2:#171312;--red:#d8443d;--red-hi:#ea5a51;--red-on-dark:#ea5a51;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+:focus-visible{outline:3px solid var(--red-on-dark);outline-offset:3px;border-radius:4px}
+.label{font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem}
+.eyebrow{color:var(--red);display:block;margin-bottom:10px}
+.on-dark .eyebrow{color:var(--red-on-dark)}
+.h2{font-family:var(--display);font-size:clamp(2rem,4.4vw,3rem);line-height:1.04}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:4px;font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;text-decoration:none;border:2px solid transparent;cursor:pointer;background:none;color:inherit}
+.btn.red{background:var(--red);color:#fff}
+.btn.red:hover{background:var(--red-hi)}
+.btn.line{border-color:currentColor}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+
+/* Menu card */
+.menu-card{background:var(--card);color:var(--ink);border:1.5px solid var(--rule);border-radius:4px;overflow:hidden}
+.menu-card .mh{background:var(--pit);color:var(--pit-fg);padding:12px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.menu-card .mh h3{font-family:var(--display);font-size:1.4rem;color:var(--red-on-dark)}
+.menu-card .mh span{color:var(--pit-soft)}
+.mtable{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.mtable th{font-family:var(--label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--ink-soft);text-align:left;padding:12px 20px 6px}
+.mtable td{padding:11px 20px;border-top:1px dashed var(--rule);vertical-align:baseline}
+.mtable td:first-child{font-weight:800}
+.mtable .p{font-family:var(--display);font-size:1.12rem;white-space:nowrap}
+.mtable .r{text-align:right}
+.mtable small{display:block;font-family:var(--body);font-size:.82rem;color:var(--ink-soft);font-weight:500}
+.mnotes{padding:14px 20px 18px;border-top:1.5px solid var(--rule);background:var(--paper-2);font-size:.92rem;color:var(--ink-soft);display:grid;gap:4px}
+.mnotes b{color:var(--ink)}
+@media (max-width:520px){.mtable th,.mtable td{padding-left:12px;padding-right:12px}.mtable .p{font-size:1rem}}
+
+/* Review */
+.quote p{font-family:var(--display);font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.2;margin:0 0 16px}
+.quote cite{font-style:normal}
+.stars{color:var(--red-on-dark);letter-spacing:.2em}
+
+/* Order builder */
+.pick{background:var(--card);color:var(--ink);border:1.5px solid var(--rule);border-radius:4px;overflow:hidden}
+.prow{display:grid;grid-template-columns:1fr auto auto;gap:8px 12px;align-items:center;padding:12px 16px;border-top:1px dashed var(--rule)}
+.grp+.prow{border-top:0}
+.prow .nm{font-weight:800}
+.grp{padding:10px 16px;background:var(--pit);color:var(--pit-fg);font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.74rem}
+select,input,textarea{font:inherit;font-size:.98rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--rule);border-radius:4px;padding:9px 10px}
+select:focus,input:focus,textarea:focus{border-color:var(--red);outline:none}
+.step{display:inline-flex;align-items:center;border:1.5px solid var(--rule);border-radius:4px;overflow:hidden}
+.step button{width:36px;height:38px;border:0;background:var(--paper);color:var(--ink);font-size:1.15rem;cursor:pointer}
+.step button:hover{background:var(--paper-2)}
+.step output{min-width:30px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+@media (max-width:520px){.prow{grid-template-columns:1fr auto}.prow select,.prow .opt{grid-column:1/-1;grid-row:2}}
+.details{display:grid;gap:12px;margin-top:16px}
+.details .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.details label{display:grid;gap:6px;font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink-soft)}
+.details input,.details textarea,.details select{width:100%;text-transform:none;letter-spacing:0}
+textarea{min-height:80px;resize:vertical}
+@media (max-width:440px){.details .two{grid-template-columns:1fr}}
+.ticket{background:var(--pit);color:var(--pit-fg);border-radius:4px;padding:22px;display:grid;gap:12px}
+.ticket .label{color:var(--red-on-dark)}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(246,241,234,.15);padding-bottom:10px}
+.total b{font-family:var(--display);font-size:2rem;font-variant-numeric:tabular-nums}
+.ticket pre{white-space:pre-wrap;font-family:var(--body);font-size:.92rem;line-height:1.5;margin:0;color:var(--pit-soft);max-height:280px;overflow:auto}
+.ticket .fine{font-size:.8rem;color:rgba(246,241,234,.5);margin:0}
+.toast{font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.76rem;color:var(--red-on-dark);min-height:1.2em}
+.sel{user-select:all}
+
+/* Layout: lukelackey.com's hero pattern in Texas 6 colors. Type, then a centre-stage photo reel on the pit-black band; the menu below walks through ordering in three steps; the estimate lives on its own view (#estimate). */
+:root{--western:"Smokum","Rye","Rockwell Extra Bold",Georgia,serif;--stencil:"Big Shoulders Stencil Display","Archivo Narrow","Arial Narrow",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--pit)}
+.view[hidden]{display:none!important}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--pit);color:var(--pit-fg);border-bottom:1px solid rgba(246,241,234,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .tx6{height:38px;width:auto;display:block;flex:none}
+.brand-name{font-family:var(--display);font-size:1.3rem;line-height:1;color:var(--pit-fg);white-space:nowrap}
+.wm-t{font-family:var(--display);font-size:1.3rem;color:var(--pit-fg);letter-spacing:.01em;line-height:1}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;color:var(--pit-soft)}
+.nav ul a:hover{color:var(--pit-fg)}
+.nav .btn{padding:9px 16px}
+@media (max-width:760px){.nav ul{display:none}}
+@media (max-width:480px){.nav .btn .long{display:none}.wm-t{font-size:1.12rem}.brand .tx6{height:32px}.brand-name{font-size:1.1rem}.brand{gap:9px}}
+.nav .btn{white-space:nowrap}
+
+/* Hero */
+.hero{background:var(--pit);color:var(--pit-fg);overflow:hidden}
+.hero .intro{padding-block:40px 0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.brandmark{margin:0;width:min(100%,820px)}
+.brandmark img{display:block;width:100%;height:auto}
+.hero .lead{color:var(--pit-soft);max-width:46ch;font-size:1.12rem;margin:24px auto 0}
+.hero-cta{margin-top:22px;justify-content:center}
+@media (max-width:640px){.hero .intro{padding-block:22px 0}}
+/* Photo reel: centre card full size, neighbours scaled back and dimmed. Cards are sized by height so each photo keeps its own shape. */
+.reel-wrap{padding-block:28px 56px}
+.reel{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"stage arrows" "bar bar";align-items:center;column-gap:24px}
+.reel-viewport{grid-area:stage;overflow:hidden;padding:24px 0}
+.reel-track{display:flex;align-items:center;gap:18px}
+.reel-track.animate{transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.reel-item{flex:0 0 auto;margin:0;border-radius:5px;overflow:hidden;background:var(--pit-2);border:1px solid rgba(246,241,234,.1);box-shadow:0 24px 60px rgba(0,0,0,.45);transform:scale(.42);opacity:.32;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .55s ease;cursor:pointer}
+.reel-item{position:relative;width:min-content}
+.reel-item.is-prev{transform:translateX(22%) scale(.55)}
+.reel-item.is-next{transform:translateX(-22%) scale(.55)}
+.reel-item.is-current{transform:none;opacity:1;cursor:default;z-index:2}
+.reel-track.instant .reel-item{transition:none}
+.reel-item img,.reel-item video{height:clamp(260px,46vw,470px);width:auto;max-width:none;display:block;background:var(--pit-2)}
+.reel-item video.tall{height:clamp(340px,60vw,580px)}
+.reel-cap{padding:11px 15px;font-family:var(--label);font-weight:700;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pit-soft);border-top:1px solid rgba(246,241,234,.08);display:flex;align-items:center;gap:9px;white-space:normal;line-height:1.35}
+.reel-cap::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red-on-dark);flex:none}
+.reel-arrows{grid-area:arrows;display:flex;flex-direction:column;gap:14px}
+.reel-nav{width:60px;height:60px;border-radius:50%;border:1px solid rgba(246,241,234,.2);background:var(--pit-2);color:var(--pit-soft);cursor:pointer;display:grid;place-items:center;transition:border-color .2s,color .2s}
+.reel-nav:hover{border-color:var(--red-on-dark);color:var(--red-on-dark)}
+.reel-nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.reel-bar{grid-area:bar;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.reel-dots{display:flex;gap:2px;flex-wrap:wrap}
+.reel-count{display:none;font-family:var(--label);font-weight:700;letter-spacing:.14em;font-size:.86rem;color:var(--pit-soft);font-variant-numeric:tabular-nums}
+.reel-count b{color:var(--pit-fg)}
+.reel-dot{padding:18px 8px;border:0;background:none;cursor:pointer;line-height:0}
+.reel-dot::before{content:"";display:block;width:7px;height:7px;border-radius:50%;background:rgba(246,241,234,.25);transition:background .2s,transform .2s}
+.reel-dot[aria-selected="true"]::before{background:var(--red-on-dark);transform:scale(1.3)}
+.reel-bar a{font-family:var(--label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;color:var(--pit-soft);text-decoration:none}
+.reel-bar a:hover{color:var(--pit-fg)}
+@media (max-width:760px){
+  .reel{grid-template-areas:"stage stage" "bar arrows";column-gap:12px;align-items:center}
+  .reel-dots{display:none}
+  .reel-count{display:block}
+  .reel-arrows{flex-direction:row;gap:10px}
+  .reel-nav{width:48px;height:48px}
+  .reel-track{gap:10px}
+  .reel-item.is-prev{transform:translateX(34%) scale(.46)}
+  .reel-item.is-next{transform:translateX(-34%) scale(.46)}
+  .reel-bar a{display:none}
+}
+@media (prefers-reduced-motion:reduce){.reel-track.animate,.reel-item{transition:none}}
+
+.strip{background:var(--red);color:#fff}
+.strip .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-block:12px}
+.strip span{font-family:var(--label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem}
+@media (max-width:640px){.strip .wrap{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding-block:12px}.strip span{font-size:.7rem;letter-spacing:.08em}}
+
+section{padding-block:76px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 32px;margin-bottom:36px}
+.head p{max-width:44ch;margin:0;color:var(--ink-soft)}
+
+/* Menu as a three-step process */
+.steps{display:grid;gap:0}
+.stepblk{display:grid;grid-template-columns:120px minmax(0,1fr);gap:28px;padding-block:28px;border-top:1.5px solid var(--rule)}
+.stepblk:first-child{border-top:0;padding-top:0}
+.stepno{font-family:var(--display);font-size:3.6rem;line-height:.85;color:transparent;-webkit-text-stroke:1.5px var(--red)}
+.stepblk h3{font-family:var(--display);font-size:1.6rem;line-height:1.1;margin-bottom:6px}
+.stepblk .why{color:var(--ink-soft);margin:0 0 18px;max-width:56ch}
+.lockcard{border:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:var(--pit);color:var(--pit-fg);border-radius:4px;padding:22px 24px}
+.lockcard .num{font-family:var(--display);font-size:clamp(1.5rem,4vw,2rem);font-variant-numeric:tabular-nums}
+.lockcard .label{color:var(--red-on-dark);display:block}
+@media (max-width:640px){.stepblk{grid-template-columns:1fr;gap:10px}.stepno{font-size:2.6rem}.lockcard>div{width:100%}.lockcard .btns{display:grid;grid-template-columns:1fr 1fr}.hero-cta{display:grid;grid-template-columns:1fr 1fr}}
+
+/* Review + about */
+.duo{background:var(--pit-2);color:var(--pit-fg)}
+.duo .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.duo .about p{color:var(--pit-soft);margin:0 0 14px;max-width:52ch}
+.pit-pic{margin:36px 0 0;border-radius:4px;overflow:hidden;border:1px solid rgba(246,241,234,.1)}
+.pit-pic img{display:block;width:100%;height:auto}
+.pit-pic figcaption{font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.74rem;color:var(--pit-soft);padding:10px 14px;background:var(--pit)}
+.owners .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.own-pics{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:end}
+.own-pics figure{margin:0;border-radius:4px;overflow:hidden}
+.own-pics img{width:100%;height:auto;display:block}
+.op-b{margin-bottom:-28px!important}
+.own-copy p{margin:0 0 14px;max-width:54ch;color:var(--ink-soft)}
+.own-copy .lead2{color:var(--ink);font-size:1.15rem;margin-top:16px}
+.board{margin:22px 0 0;border:1.5px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--card)}
+.board img{width:100%;height:auto;display:block}
+.board figcaption{font-size:.84rem;color:var(--ink-soft);padding:8px 12px}
+@media (max-width:860px){.owners .wrap{grid-template-columns:1fr;gap:44px}.op-b{margin-bottom:0!important}}
+.duo .quote cite{color:var(--pit-soft)}
+@media (max-width:860px){.duo .wrap{grid-template-columns:1fr;gap:40px}}
+
+footer{background:var(--pit);color:var(--pit-fg);padding-block:44px 32px}
+footer .wrap{display:grid;grid-template-columns:auto 1.3fr 1.2fr 1fr;gap:28px 44px;align-items:center}
+.f-name{color:var(--pit-fg)!important;font-family:var(--display);font-size:1.3rem;margin-bottom:6px!important}
+footer .label{display:block;color:var(--red-on-dark);margin-bottom:6px}
+footer .f-logo{width:120px;border-radius:50%;box-shadow:0 0 0 5px var(--pit-2)}
+footer p{margin:2px 0;color:var(--pit-soft)}
+footer a{display:inline-block;padding-block:4px;color:var(--pit-fg)}
+@media (max-width:860px){footer .wrap{grid-template-columns:auto 1fr;align-items:start}footer .f-logo{width:96px;grid-row:span 3}}
+@media (max-width:480px){
+  footer{padding-block:36px 28px}
+  footer .wrap{grid-template-columns:auto 1fr;gap:0 16px;align-items:center}
+  footer .f-logo{width:78px;grid-row:auto}
+  footer .f-name{font-size:1.2rem}
+  footer .f-call,footer .f-serve{grid-column:1/-1;border-top:1px solid rgba(246,241,234,.12);margin-top:22px;padding-top:18px}
+  footer .f-serve p{display:inline;margin-right:14px}
+  footer .fine{margin-top:22px}
+}
+footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border-top:1px solid rgba(246,241,234,.12);padding-top:16px}
+
+/* Estimate page */
+.est{padding-block:36px 140px;max-width:720px}
+.back{display:inline-flex;align-items:center;gap:8px;font-family:var(--label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;color:var(--ink-soft);text-decoration:none;padding-block:10px}
+.back:hover{color:var(--red)}
+.est h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,3.2rem);line-height:1;margin:14px 0 10px}
+.est .sub{color:var(--ink-soft);margin:0 0 28px}
+.elist{background:var(--card);border:1.5px solid var(--rule);border-radius:4px;overflow:hidden}
+.egrp{padding:10px 16px;background:var(--pit);color:var(--pit-fg);font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.74rem}
+.erow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px dashed var(--rule)}
+.egrp+.erow{border-top:0}
+.erow .nm{font-weight:800}
+.erow .pr{display:block;font-size:.88rem;color:var(--ink-soft);font-weight:500;font-variant-numeric:tabular-nums}
+.erow.on{background:color-mix(in srgb,var(--red) 7%,transparent)}
+.emeta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.emeta label{display:grid;gap:6px;font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink-soft)}
+.emeta input{width:100%;text-transform:none;letter-spacing:0}
+@media (max-width:440px){.emeta{grid-template-columns:1fr}}
+.ebar{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--pit);color:var(--pit-fg);border-top:1px solid rgba(246,241,234,.12);padding-bottom:env(safe-area-inset-bottom,0px)}
+.ebar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:12px;max-width:720px}
+.ebar .tot{display:grid}
+.ebar .tot b{font-family:var(--display);font-size:1.7rem;line-height:1;font-variant-numeric:tabular-nums}
+.ebar .tot span{font-size:.8rem;color:var(--pit-soft)}
+.ebar .btns{flex-wrap:nowrap}
+.ebar .btn{padding:12px 16px}
+.etoast{font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.76rem;color:var(--red);min-height:1.2em;margin-top:14px}
+.epreview{margin-top:20px;background:var(--paper-2);border-radius:4px;padding:16px 18px;white-space:pre-wrap;font-family:var(--body);font-size:.92rem;color:var(--ink-soft)}
+
+/* Facebook */
+.fb{background:var(--pit-2);color:var(--pit-fg)}
+.fb .head p{color:var(--pit-soft)}
+.fb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.fb-card{background:var(--pit);border:1px solid rgba(246,241,234,.1);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.fb-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--pit-2)}
+.fb-card .fb-body{padding:16px 18px 18px;display:grid;gap:8px}
+.fb-card time{font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.74rem;color:var(--red-on-dark)}
+.fb-card p{margin:0;color:var(--pit-soft);font-size:.98rem;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.fb-card:hover{border-color:rgba(246,241,234,.28)}
+.fb-embed{display:flex;justify-content:center}
+.fb-embed iframe{width:100%;max-width:500px;background:#fff;border-radius:4px}
+.fb-more{margin:28px 0 0;text-align:center}
+@media (max-width:860px){.fb-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.fb-grid{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="#" aria-label="Texas 6 BBQ home"><img class="tx6" src="img/tx6-icon.svg" width="107" height="104" alt=""><span class="brand-name">Texas 6 BBQ</span></a>
+  <ul><li><a href="#menu">Menu</a></li><li><a href="#owners">About</a></li><li><a href="#facebook">Latest</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="btn red" href="#estimate">Get <span class="long">an </span>estimate</a>
+</div></nav>
+
+<div class="view" id="home">
+<header class="hero">
+  <div class="wrap intro">
+    <h1 class="brandmark"><img src="img/logo-cream.svg" width="1000" height="350" alt="Texas 6 BBQ. Family Owned and Operated. No. 1. Smoked to Perfection. Est 2023, Waco TX."></h1>
+    <p class="lead" data-edit="hero_lead" data-label="Intro under the logo" data-section="Top of page" data-multiline>True Texas smoked BBQ for your graduation party, get-together, or just lunch for the family. Get your pre-orders in!</p>
+    <div class="btns hero-cta"><a class="btn red" href="tel:+19796273285">Call Casey</a><a class="btn line" href="#menu">See the menu</a></div>
+  </div>
+
+  <div class="wrap reel-wrap">
+    <div class="reel" id="reel" aria-roledescription="carousel" aria-label="Food from the pit">
+      <div class="reel-viewport">
+        <div class="reel-track" id="reelTrack">
+          <figure class="reel-item"><img src="img/brisket-sliced.jpg" width="1200" height="900" alt="Sliced brisket fanned out on a cutting board, showing the pepper bark and smoke ring"><figcaption class="reel-cap">Brisket, sliced to order</figcaption></figure>
+          <figure class="reel-item"><img src="img/ribs-smoke.jpg" width="1400" height="1050" alt="Racks of ribs with a pepper rub in a smoking pit"><figcaption class="reel-cap">Ribs on the pit</figcaption></figure>
+          <figure class="reel-item"><img src="img/smoker.jpg" width="900" height="1200" alt="The Texas 6 offset smoker set up in a field" loading="lazy"><figcaption class="reel-cap">The smoker</figcaption></figure>
+          <figure class="reel-item"><video class="tall" style="aspect-ratio:360/640" src="img/pulled-pork.mp4" poster="img/pulled-pork-poster.jpg" width="360" height="640" muted loop playsinline preload="metadata" aria-label="Pulled pork being pulled apart by hand"></video><figcaption class="reel-cap">Pulled pork</figcaption></figure>
+          <figure class="reel-item"><img src="img/butts-pit.jpg" width="1050" height="1400" alt="Four scored pork shoulders on the smoker grate" loading="lazy"><figcaption class="reel-cap">Pork shoulders, low and slow</figcaption></figure>
+          <figure class="reel-item"><img src="img/brisket-pan.jpg" width="900" height="1200" alt="A full pan of sliced and chopped brisket" loading="lazy"><figcaption class="reel-cap">Brisket by the pan</figcaption></figure>
+          <figure class="reel-item"><img src="img/board-pork.jpg" width="1050" height="1400" loading="lazy" alt="Smoked pork shoulder and country ribs in front of the engraved Texas 6 BBQ cutting board"><figcaption class="reel-cap">Smoked to perfection</figcaption></figure>
+          <figure class="reel-item"><img src="img/pork-closeup.jpg" width="1050" height="1400" alt="Close-up of glossy smoked country ribs with pepper bark" loading="lazy"><figcaption class="reel-cap">Country ribs · photo by Stephanie Hall</figcaption></figure>
+          <figure class="reel-item"><img src="img/event-spread.jpg" width="900" height="1200" alt="Catering pan of brisket in front of the Texas 6 BBQ engraved board" loading="lazy"><figcaption class="reel-cap">Rehearsal dinner, Dec 2025</figcaption></figure>
+          <figure class="reel-item"><img src="img/sides-table.jpg" width="900" height="1200" alt="A catering table with sides, sauces and rolls" loading="lazy"><figcaption class="reel-cap">Sides and rolls for a crowd</figcaption></figure>
+          <figure class="reel-item"><img src="img/ribs-glaze.jpg" width="900" height="1200" alt="Glazed baby back ribs, cut open" loading="lazy"><figcaption class="reel-cap">Baby back ribs</figcaption></figure>
+          <figure class="reel-item"><img src="img/fire.jpg" width="1050" height="1400" alt="Oak logs burning down to coals in the firebox" loading="lazy"><figcaption class="reel-cap">Real wood, every cook</figcaption></figure>
+          <figure class="reel-item"><img src="img/chicken-pit.jpg" width="1200" height="900" alt="Chicken quarters on the pit" loading="lazy"><figcaption class="reel-cap">Chicken quarters</figcaption></figure>
+        </div>
+      </div>
+      <div class="reel-arrows">
+        <button class="reel-nav prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="reel-nav next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+      <div class="reel-bar">
+        <div class="reel-dots" role="group" aria-label="Choose a photo"></div><span class="reel-count" aria-live="polite"><b id="rcNow">1</b> / <span id="rcAll">12</span></span>
+        <a href="https://www.facebook.com/profile.php?id=100092064403815">More on Facebook →</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="strip"><div class="wrap"><span data-edit="strip_1" data-label="Red banner, item 1" data-section="Top of page">Smoked to perfection</span><span data-edit="strip_2" data-label="Red banner, item 2" data-section="Top of page">Real wood · low &amp; slow</span><span data-edit="strip_3" data-label="Red banner, item 3" data-section="Top of page">No sugar in rubs or sides</span><span data-edit="strip_4" data-label="Red banner, item 4" data-section="Top of page">Est. 2023 · Waco, TX</span></div></div>
+
+<main>
+  <section id="menu">
+    <div class="wrap">
+      <div class="head"><div><span class="label eyebrow">Catering menu</span><h2 class="h2" data-edit="menu_heading" data-label="Menu heading" data-section="Menu">How to order</h2></div>
+        <p data-edit="menu_intro" data-label="Menu intro" data-section="Menu">Three steps from smoker to your table. Lock your dates in now.</p></div>
+      <div class="steps">
+        <div class="stepblk">
+          <div class="stepno" aria-hidden="true">1</div>
+          <div>
+            <h3 data-edit="step1_title" data-label="Step 1 title" data-section="Menu">Pick your meats</h3>
+            <p class="why" data-edit="step1_text" data-label="Step 1 text" data-section="Menu" data-multiline>Get it whole to feed a crowd, or by the half and the pound for the family.</p>
+            <div class="menu-card">
+              <div style="overflow-x:auto"><table class="mtable">
+                <thead><tr><th>Meat</th><th>Whole</th><th>Half / by the lb</th></tr></thead>
+                <tbody id="meatsBody">
+                  <tr><td>Brisket</td><td class="p">$200<small>10+ lbs</small></td><td class="p">$100<small>half, or $28/lb</small></td></tr>
+                  <tr><td>Pulled Pork</td><td class="p">$80<small>8+ lbs</small></td><td class="p">$15<small>per lb</small></td></tr>
+                  <tr><td>Turkey Breast</td><td class="p">$60<small>3+ lbs</small></td><td class="p">$20<small>per lb</small></td></tr>
+                  <tr><td>Baby Back Ribs</td><td class="p">$35<small>full rack</small></td><td class="p">$18<small>half rack</small></td></tr>
+                  <tr><td>Chicken Quarters</td><td class="p">$18<small>6 quarters</small></td><td class="p">—</td></tr>
+                  <tr><td>Country Ribs</td><td class="p">$20<small>6 ribs</small></td><td class="p">—</td></tr>
+                </tbody>
+              </table></div>
+              <div class="mnotes"><span data-edit="meats_note" data-label="Note under meats" data-section="Menu" data-multiline>All meats are smoked with <b>real wood, low and slow</b>, and you can taste it.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="stepblk">
+          <div class="stepno" aria-hidden="true">2</div>
+          <div>
+            <h3 data-edit="step2_title" data-label="Step 2 title" data-section="Menu">Add your sides</h3>
+            <p class="why" data-edit="step2_text" data-label="Step 2 text" data-section="Menu" data-multiline>Sides come in half-size foil pans.</p>
+            <div class="menu-card">
+              <table class="mtable"><tbody id="sidesBody">
+                <tr><td>Pan Fried Potatoes</td><td class="p r">$18</td></tr>
+                <tr><td>Green Beans</td><td class="p r">$24</td></tr>
+                <tr><td>Ranch Beans</td><td class="p r">$20</td></tr>
+                <tr><td>Banana Pudding</td><td class="p r">$32</td></tr>
+              </tbody></table>
+              <div class="mnotes"><span data-edit="sides_note" data-label="Note under sides" data-section="Menu" data-multiline><b>No sugar</b> is used in the rubs or sides. Desserts not included. Sugar-free and gluten-free desserts available upon request.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="stepblk">
+          <div class="stepno" aria-hidden="true">3</div>
+          <div>
+            <h3 data-edit="step3_title" data-label="Step 3 title" data-section="Menu">Lock in your date</h3>
+            <p class="why" data-edit="step3_text" data-label="Step 3 text" data-section="Menu" data-multiline>Call or text Casey with your date and headcount. Want a ballpark first? Build a quick estimate and send it over.</p>
+            <div class="lockcard">
+              <div><span class="label" data-edit="step3_label" data-label="Step 3 contact label" data-section="Menu">Call or text Casey Hall</span><span class="num sel" data-bind="phone">(979) 627-3285</span></div>
+              <div class="btns"><a class="btn red" href="#estimate">Get an estimate</a><a class="btn line" href="sms:+19796273285">Text Casey</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="duo on-dark" id="about">
+    <div class="wrap">
+      <div class="quote">
+        <span class="label eyebrow" data-edit="review_label" data-label="Review label" data-section="Review">From a rehearsal dinner we catered</span>
+        <div class="stars" aria-label="Recommended">★★★★★</div>
+        <p data-edit="review_quote" data-label="Review quote" data-section="Review" data-multiline>“If you need a caterer for your next event, Texas 6 BBQ is where it’s at! They took care of every detail and our guests raved about the food! Best choice ever!”</p>
+        <cite class="label" data-edit="review_cite" data-label="Review credit" data-section="Review">Texas 6 customer · Facebook</cite>
+        <figure class="pit-pic"><img src="img/trailer.jpg" width="1200" height="900" alt="The Texas 6 trailer smoker" loading="lazy"><figcaption>The Texas 6 pit</figcaption></figure>
+      </div>
+      <div class="about">
+        <span class="label eyebrow">About Texas 6</span>
+        <h2 class="h2" style="margin-bottom:18px" data-edit="about_heading" data-label="About heading" data-section="About">This is what it’s all about.</h2>
+        <p data-edit="about_p1" data-label="About paragraph 1" data-section="About" data-multiline>Texas 6 BBQ is family owned and operated by Casey and Jammie Hall right here in Waco, cooking since 2023. We cook true Texas smoked BBQ: real wood, low and slow, with rubs and sides made without sugar.</p>
+        <p data-edit="about_p2" data-label="About paragraph 2" data-section="About" data-multiline>We cater graduation parties, get-togethers, rehearsal dinners and family lunches, and we deliver.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="owners" id="owners">
+    <div class="wrap">
+      <div class="own-pics">
+        <figure class="op-a"><img src="img/owners.jpg" width="1088" height="1100" alt="Casey and Jammie Hall on their wedding day" loading="lazy"></figure>
+        <figure class="op-b"><img src="img/casey-grill.jpg" width="1000" height="1230" alt="Casey Hall cooking on the griddle" loading="lazy"></figure>
+      </div>
+      <div class="own-copy">
+        <span class="label eyebrow">Meet the family</span>
+        <h2 class="h2" data-edit="owners_heading" data-label="Family heading" data-section="Meet the family">Casey &amp; Jammie Hall</h2>
+        <p class="lead2" data-edit="owners_lead" data-label="Family intro" data-section="Meet the family" data-multiline>Texas 6 is a husband-and-wife business, family owned and operated in Waco since 2023.</p>
+        <p data-edit="owners_p" data-label="Family paragraph" data-section="Meet the family" data-multiline>When you call or text to order, you’re talking to Casey directly. Every brisket, rack of ribs and pan of sides comes from their family to yours.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fb on-dark" id="facebook">
+    <div class="wrap">
+      <div class="head"><div><span class="label eyebrow">Latest from Facebook</span><h2 class="h2" data-edit="fb_heading" data-label="Facebook section heading" data-section="Facebook">Fresh off the pit</h2></div>
+        <p data-edit="fb_intro" data-label="Facebook section intro" data-section="Facebook" data-multiline>What Casey and Jammie are cooking this week, straight from the Texas 6 Facebook page.</p></div>
+      <div class="fb-grid" id="fbPosts" hidden></div>
+      <div class="fb-embed" id="fbEmbed">
+        <iframe title="Texas 6 BBQ on Facebook" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100092064403815&amp;tabs=timeline&amp;width=500&amp;height=640&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="500" height="640" loading="lazy" allow="encrypted-media" style="border:0;overflow:hidden"></iframe>
+      </div>
+      <p class="fb-more"><a class="btn line" data-bind-href="facebook_url" href="https://www.facebook.com/profile.php?id=100092064403815" target="_blank" rel="noopener">Follow Texas 6 on Facebook</a></p>
+    </div>
+  </section>
+</main>
+</div>
+
+<div class="view" id="estimateView" hidden>
+  <div class="wrap est">
+    <a class="back" href="#menu">← Back to the menu</a>
+    <h1>Quick estimate</h1>
+    <p class="sub" data-edit="estimate_intro" data-label="Estimate page intro" data-section="Estimate page" data-multiline>Tap + on what you want. Casey confirms the final price and date.</p>
+    <div class="elist" id="elist"></div>
+    <div class="emeta">
+      <label for="eName">Your name<input id="eName" autocomplete="name" placeholder="Optional"></label>
+      <label for="eDate">Date needed<input id="eDate" type="date"></label>
+    </div>
+    <div class="epreview" id="ePreview" aria-live="polite"></div>
+    <div class="etoast" id="eToast"></div>
+  </div>
+  <div class="ebar"><div class="wrap">
+    <div class="tot"><span>Estimate</span><b id="eTotal">$0</b></div>
+    <div class="btns"><button class="btn line" id="eCopy" type="button">Copy</button><a class="btn red" id="eSms" href="sms:+19796273285">Text Casey</a></div>
+  </div></div>
+</div>
+
+<footer id="contact"><div class="wrap">
+  <img class="f-logo" src="img/logo-hi.jpg" width="360" height="360" alt="Texas 6 BBQ logo">
+  <div><p class="f-name">Texas 6 BBQ</p><p data-edit="footer_tagline" data-label="Footer tagline" data-section="Footer" data-multiline>Family owned and operated.
+True Texas smoked BBQ.</p></div>
+  <div class="f-call"><span class="label">Call or text</span><p class="sel" style="color:var(--pit-fg)" data-bind="phone">(979) 627-3285</p><p data-bind="owner_names">Casey &amp; Jammie Hall</p><p class="sel" data-bind="email">Realtexas6bbq@gmail.com</p></div>
+  <div class="f-serve"><span class="label">Serving</span><p>Waco, Texas</p><p><a href="https://www.facebook.com/profile.php?id=100092064403815">Facebook</a></p></div>
+  <div class="fine">© 2026 Texas 6 BBQ · Waco, TX</div>
+</div></footer>
+<script src="assets/config.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
