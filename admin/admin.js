@@ -47,6 +47,8 @@
       $('liErr').textContent = 'That login doesn’t have admin access.';
       return;
     }
+    // Signing in opens the live site in edit mode; the portal itself is Settings (admin/#settings).
+    if (location.hash !== '#settings') { location.replace('../?edit'); return; }
     $('loginView').hidden = true; $('appView').hidden = false;
     loadMenu().then(loadSuggestions); loadMedia().then(loadFacebook); loadText();
   }

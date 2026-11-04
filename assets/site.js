@@ -45,7 +45,8 @@
 
   /* ---------- Photo reel (same mechanics as lukelackey.com) ---------- */
   var reel = { place: null, abort: null, timer: null };
-  function initReel() {
+  function initReel(start, opts) {
+    opts = opts || {};
     var el = $('reel'), track = $('reelTrack');
     if (reel.abort) reel.abort.abort();
     if (reel.timer) clearInterval(reel.timer);
@@ -57,7 +58,7 @@
     var dotsWrap = el.querySelector('.reel-dots');
     dotsWrap.innerHTML = '';
     if (!count) return;
-    var pos = count;
+    var pos = count + Math.max(0, Math.min(count - 1, start || 0));
     var dots = slides.map(function (s, i) {
       var b = document.createElement('button'); b.className = 'reel-dot'; b.type = 'button';
       var cap = s.querySelector('figcaption');
@@ -96,7 +97,7 @@
     var snap = function () { if (pos >= count && pos < count * 2) return; pos = count + (pos % count); track.classList.add('instant'); place(false); paint(); void track.offsetWidth; track.classList.remove('instant'); };
     on(track, 'transitionend', function (e) { if (e.target === track && e.propertyName === 'transform') snap(); });
     var stop = function () { if (reel.timer) { clearInterval(reel.timer); reel.timer = null; } };
-    var start = function () { stop(); if (!reduceMotion && count > 1) reel.timer = setInterval(function () { show(pos + 1, true); }, 6000); };
+    var start = function () { stop(); if (!reduceMotion && count > 1 && !opts.still) reel.timer = setInterval(function () { show(pos + 1, true); }, 6000); };
     var jump = function (to) { show(to, true); if (reduceMotion) snap(); start(); };
     var jumpToIndex = function (i) { var here = pos % count, step = i - here; if (step > count / 2) step -= count; if (step < -count / 2) step += count; jump(pos + step); };
     on(track, 'click', function (e) { var c = e.target.closest('.reel-item'); if (!c) return; var at = frames.indexOf(c); if (at !== -1 && at !== pos) jump(at); });
@@ -121,10 +122,10 @@
     var cap = m.caption ? '<figcaption class="reel-cap">' + esc(m.caption) + '</figcaption>' : '';
     if (m.kind === 'video') {
       var tall = h > w ? ' tall' : '';
-      return '<figure class="reel-item"><video class="' + tall + '" src="' + esc(m.url) + '"' + (m.poster_url ? ' poster="' + esc(m.poster_url) + '"' : '') +
+      return '<figure class="reel-item" data-id="' + esc(m.id || '') + '"><video class="' + tall + '" src="' + esc(m.url) + '"' + (m.poster_url ? ' poster="' + esc(m.poster_url) + '"' : '') +
         ' width="' + w + '" height="' + h + '" style="aspect-ratio:' + w + '/' + h + '" muted loop playsinline preload="metadata" aria-label="' + esc(m.alt || m.caption) + '"></video>' + cap + '</figure>';
     }
-    return '<figure class="reel-item"><img src="' + esc(m.url) + '" width="' + w + '" height="' + h + '" alt="' + esc(m.alt || m.caption) + '"' + lazy + '>' + cap + '</figure>';
+    return '<figure class="reel-item" data-id="' + esc(m.id || '') + '"><img src="' + esc(m.url) + '" width="' + w + '" height="' + h + '" alt="' + esc(m.alt || m.caption) + '"' + lazy + '>' + cap + '</figure>';
   }
 
   /* ---------- Menu tables ---------- */
@@ -275,9 +276,31 @@
     get('fb_posts?select=*&hidden=eq.false&order=created_time.desc&limit=6').then(renderPosts).catch(function () {});
   }
 
+  // Hooks for the visual editor (assets/editor.js), which only loads for signed-in admins.
+  window.T6 = {
+    state: state, esc: esc, rich: rich, money: money,
+    renderMenu: renderMenu, renderEstimate: renderEstimate, buildEstimate: buildEstimate,
+    initReel: initReel, slideHTML: slideHTML, applyText: applyText, renderPosts: renderPosts,
+    currentSlide: function () { var c = document.querySelector('#reelTrack .reel-item.is-current'); var all = [].slice.call(document.querySelectorAll('#reelTrack .reel-item:not([data-copy])')); var id = c && c.getAttribute('data-id'); return Math.max(0, all.findIndex(function (f) { return f.getAttribute('data-id') === id; })); }
+  };
+
+  var editMode = /[?&]edit\b/.test(location.search);
   renderMenu();
   renderEstimate();
   initReel();
   route();
-  load();
+  if (editMode) {
+    ['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js', 'assets/editor.js?v=' + Date.now()].reduce(function (p, src) {
+      return p.then(function () { return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.body.appendChild(s); }); });
+    }, Promise.resolve()).catch(function () { load(); });
+  } else {
+    load();
+    // Signed-in admins get a small shortcut into edit mode.
+    try {
+      if (Object.keys(localStorage).some(function (k) { return /^sb-.*-auth-token$/.test(k); })) {
+        var a = document.createElement('a'); a.href = '?edit'; a.className = 'edit-pill'; a.textContent = 'Edit this page';
+        document.body.appendChild(a);
+      }
+    } catch (e) {}
+  }
 })();
