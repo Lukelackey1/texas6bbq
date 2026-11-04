@@ -271,6 +271,19 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
 .fb-more{margin:28px 0 0;text-align:center}
 @media (max-width:860px){.fb-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.fb-grid{grid-template-columns:1fr}}
+
+/* Holiday special */
+.special{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:var(--pit);color:var(--pit-fg);border-radius:6px;padding:28px;margin-bottom:44px;border:1px solid var(--rule);position:relative;overflow:hidden}
+.special::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--red)}
+.special-copy{display:grid;gap:12px}
+.special-tag{color:var(--red-on-dark)}
+.special h3{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.05}
+.special p{margin:0;color:var(--pit-soft);max-width:44ch}
+.special p b{color:var(--pit-fg)}
+.special .btns{margin-top:6px}
+.special-card{border-color:transparent}
+.mtable td small.inl{display:inline;margin-left:6px}
+@media (max-width:760px){.special{grid-template-columns:1fr;padding:22px 18px;gap:20px}}
 </style>
 
 </head>
@@ -327,6 +340,15 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
     <div class="wrap">
       <div class="head"><div><span class="label eyebrow">Catering menu</span><h2 class="h2" data-edit="menu_heading" data-label="Menu heading" data-section="Menu">How to order</h2></div>
         <p data-edit="menu_intro" data-label="Menu intro" data-section="Menu">Three steps from smoker to your table. Lock your dates in now.</p></div>
+      <div class="special" id="special" hidden>
+        <div class="special-copy">
+          <span class="label special-tag" data-edit="special_label" data-label="Special label" data-section="Holiday special">Holiday special</span>
+          <h3 data-edit="special_heading" data-label="Special heading" data-section="Holiday special">It’s turkey time!</h3>
+          <p data-edit="special_text" data-label="Special details" data-section="Holiday special" data-multiline>Let us smoke the meat for your Thanksgiving dinner.</p>
+          <div class="btns"><a class="btn red" href="tel:+19796273285">Call Casey</a><a class="btn line" href="#estimate">Get an estimate</a></div>
+        </div>
+        <div class="menu-card special-card"><table class="mtable"><tbody id="specialBody"></tbody></table></div>
+      </div>
       <div class="steps">
         <div class="stepblk">
           <div class="stepno" aria-hidden="true">1</div>

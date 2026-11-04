@@ -99,16 +99,16 @@
     return '<label class="f' + (cls ? ' ' + cls : '') + '"><span>' + label + '</span><input data-i="' + i + '" data-k="' + key + '" value="' + esc(menu[i][key] || '') + '" placeholder="' + esc(ph || '') + '"></label>';
   }
   function renderMenu() {
-    ['meat', 'side'].forEach(function (cat) {
-      var list = $(cat === 'meat' ? 'meatList' : 'sideList');
+    ['special', 'meat', 'side'].forEach(function (cat) {
+      var list = $(cat + 'List');
       var idx = menu.map(function (m, i) { return i; }).filter(function (i) { return menu[i].category === cat; });
-      if (!idx.length) { list.innerHTML = '<div class="empty">No ' + (cat === 'meat' ? 'meats' : 'sides') + ' yet.</div>'; return; }
+      if (!idx.length) { list.innerHTML = '<div class="empty">No ' + ({ meat: 'meats', side: 'sides', special: 'specials right now' })[cat] + ' yet.</div>'; return; }
       list.innerHTML = idx.map(function (i, n) {
         var m = menu[i];
         var fields = cat === 'meat'
           ? '<div class="item-grid">' + moneyField(i, 'whole_price', 'Whole price') + textField(i, 'whole_note', 'Whole size', 'e.g. 10+ lbs') + moneyField(i, 'lb_price', 'Per lb price') +
             moneyField(i, 'half_price', 'Half price') + textField(i, 'half_note', 'Half size', 'e.g. half rack', 'wide') + '</div>'
-          : '<div class="item-grid sides">' + moneyField(i, 'whole_price', 'Pan price') + textField(i, 'whole_note', 'Note (optional)', 'e.g. serves 15') + '</div>';
+          : '<div class="item-grid sides">' + moneyField(i, 'whole_price', cat === 'special' ? 'Price' : 'Pan price') + textField(i, 'whole_note', 'Note (optional)', 'e.g. serves 15') + '</div>';
         return '<div class="card item' + (m.active ? '' : ' off') + '">' +
           '<div class="item-top"><input aria-label="Item name" data-i="' + i + '" data-k="name" value="' + esc(m.name) + '"><span class="pill ' + (m.active ? 'on' : 'off') + '">' + (m.active ? 'On menu' : 'Hidden') + '</span></div>' +
           fields +
@@ -120,7 +120,7 @@
     });
   }
   function markMenu() { dirty.menu = true; refreshBar(); }
-  ['meatList', 'sideList'].forEach(function (id) {
+  ['specialList', 'meatList', 'sideList'].forEach(function (id) {
     var el = $(id);
     el.addEventListener('input', function (e) {
       var t = e.target; if (!t.dataset.k) return;
@@ -145,9 +145,9 @@
   });
   document.querySelectorAll('[data-add]').forEach(function (b) {
     b.addEventListener('click', function () {
-      menu.push({ id: uuid(), category: b.dataset.add, name: b.dataset.add === 'meat' ? 'New meat' : 'New side', whole_price: null, whole_note: '', half_price: null, half_note: '', lb_price: null, active: true, _new: true });
+      menu.push({ id: uuid(), category: b.dataset.add, name: ({ meat: 'New meat', side: 'New side', special: 'New special' })[b.dataset.add], whole_price: null, whole_note: '', half_price: null, half_note: '', lb_price: null, active: true, _new: true });
       markMenu(); renderMenu();
-      var list = $(b.dataset.add === 'meat' ? 'meatList' : 'sideList'); var inp = list.querySelectorAll('.item-top input'); inp[inp.length - 1].select();
+      var list = $(b.dataset.add + 'List'); var inp = list.querySelectorAll('.item-top input'); inp[inp.length - 1].select();
     });
   });
   async function saveMenu() {
@@ -156,7 +156,7 @@
       if (!String(m.name || '').trim()) throw new Error('every item needs a name');
       ['whole_price', 'half_price', 'lb_price'].forEach(function (k) { if (m[k] !== null && isNaN(m[k])) throw new Error('“' + m.name + '” has a price that isn’t a number'); });
     }
-    var sorts = { meat: 0, side: 0 };
+    var sorts = { meat: 0, side: 0, special: 0 };
     var rows = menu.map(function (m) {
       return { id: m.id, category: m.category, name: m.name.trim(), whole_price: m.whole_price, whole_note: m.whole_note || '', half_price: m.half_price, half_note: m.half_note || '', lb_price: m.lb_price, active: m.active, sort: sorts[m.category]++ };
     });

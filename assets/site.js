@@ -137,6 +137,11 @@
   function renderMenu() {
     var meats = state.menu.filter(function (m) { return m.category === 'meat'; });
     var sides = state.menu.filter(function (m) { return m.category === 'side'; });
+    var specials = state.menu.filter(function (m) { return m.category === 'special'; });
+    $('special').hidden = !specials.length;
+    $('specialBody').innerHTML = specials.map(function (m) {
+      return '<tr><td>' + esc(m.name) + (m.whole_note ? '<small>' + esc(m.whole_note) + '</small>' : '') + '</td><td class="p r">' + (has(m.whole_price) ? money(m.whole_price) : '—') + '</td></tr>';
+    }).join('');
     $('meatsBody').innerHTML = meats.map(function (m) {
       var whole = has(m.whole_price) ? money(m.whole_price) + (m.whole_note ? '<small>' + esc(m.whole_note) + '</small>' : '') : '—';
       var second = '—';
@@ -156,14 +161,15 @@
   /* ---------- Estimate ---------- */
   var q = {};
   function estimateItems() {
-    var meats = [], sides = [];
+    var meats = [], sides = [], specials = [];
     state.menu.forEach(function (m) {
+      if (m.category === 'special') { if (has(m.whole_price)) specials.push([m.name, m.whole_note || '', Number(m.whole_price)]); return; }
       if (m.category === 'side') { if (has(m.whole_price)) sides.push([m.name, m.whole_note || '', Number(m.whole_price)]); return; }
       if (has(m.whole_price)) meats.push([m.name + (has(m.half_price) || has(m.lb_price) ? ', whole' : ''), m.whole_note || '', Number(m.whole_price)]);
       if (has(m.half_price)) meats.push([m.name + ', half', m.half_note || '', Number(m.half_price)]);
       if (has(m.lb_price)) meats.push([m.name, 'per lb', Number(m.lb_price)]);
     });
-    return [['Meats', meats], ['Sides · half-size foil pans', sides]];
+    return [['Holiday special', specials], ['Meats', meats], ['Sides · half-size foil pans', sides]];
   }
   function renderEstimate() {
     var html = ''; var prev = q; q = {};
