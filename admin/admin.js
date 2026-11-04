@@ -58,6 +58,7 @@
     tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.tab === name)); });
     document.querySelectorAll('[data-panel]').forEach(function (p) { p.hidden = p.dataset.panel !== name; });
     try { localStorage.setItem('t6tab', name); } catch (e) {}
+    if (name === 'media') requestAnimationFrame(function () { document.querySelectorAll('#mediaGrid textarea.auto').forEach(function (t) { t.style.height = 'auto'; t.style.height = t.scrollHeight + 2 + 'px'; }); });
     window.scrollTo(0, 0);
   }
   tabs.forEach(function (t) { t.addEventListener('click', function () { showTab(t.dataset.tab); }); });
@@ -214,15 +215,20 @@
         : '<img src="' + esc(abs(m.url)) + '" alt="" loading="lazy">';
       return '<div class="mcard' + (m.active ? '' : ' off') + '" data-id="' + m.id + '">' +
         '<div class="thumb">' + thumb + '<span class="n">' + (i + 1) + '</span>' + (m.kind === 'video' ? '<span class="kind">Video</span>' : '') + '</div>' +
-        '<div class="mbody"><label class="f"><span>Caption</span><input data-f="caption" data-i="' + i + '" value="' + esc(m.caption) + '" placeholder="Shown under the photo"></label>' +
-        '<label class="f"><span>Description for screen readers</span><input data-f="alt" data-i="' + i + '" value="' + esc(m.alt) + '" placeholder="What’s in the picture"></label>' +
+        '<div class="mbody"><label class="f"><span>Caption</span><textarea class="auto" rows="1" data-f="caption" data-i="' + i + '" placeholder="Shown under the photo">' + esc(m.caption) + '</textarea></label>' +
+        '<label class="f"><span>Description for screen readers</span><textarea class="auto" rows="1" data-f="alt" data-i="' + i + '" placeholder="What’s in the picture">' + esc(m.alt) + '</textarea></label>' +
         '<label class="toggle"><input type="checkbox" data-f="active" data-i="' + i + '"' + (m.active ? ' checked' : '') + '> Show on site</label></div>' +
         '<div class="mtools"><div style="display:flex;gap:6px"><button class="btn small" type="button" data-mv="-1" data-i="' + i + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move earlier">←</button>' +
         '<button class="btn small" type="button" data-mv="1" data-i="' + i + '"' + (i === media.length - 1 ? ' disabled' : '') + ' aria-label="Move later">→</button>' +
         (i > 0 ? '<button class="btn small" type="button" data-first="' + i + '">Make first</button>' : '') + '</div>' +
         '<button class="btn small danger" type="button" data-rm="' + i + '">Delete</button></div></div>';
     }).join('');
+    g.querySelectorAll('textarea.auto').forEach(fit);
   }
+  // Caption boxes grow to show all of their text.
+  function fit(t) { t.style.height = 'auto'; t.style.height = t.scrollHeight + 2 + 'px'; }
+  $('mediaGrid').addEventListener('input', function (e) { if (e.target.matches('textarea.auto')) fit(e.target); });
+  addEventListener('resize', function () { document.querySelectorAll('#mediaGrid textarea.auto').forEach(fit); });
   async function saveOrder() {
     var rows = media.map(function (m, i) { return { id: m.id, kind: m.kind, url: m.url, sort: i }; });
     var r = await sb.from('media').upsert(rows);
