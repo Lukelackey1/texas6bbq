@@ -145,9 +145,9 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
 
 <div class="login" id="loginView">
   <form class="card" id="loginForm" novalidate>
-    <div class="logo"><img src="../img/tx6-icon.svg" alt=""><div><h2>Texas 6 BBQ</h2><span class="label">Site admin</span></div></div>
-    <p class="muted">Sign in to edit prices, photos and wording on the website.</p>
-    <label class="f"><span>Email</span><input id="liEmail" type="email" autocomplete="username" required></label>
+    <div class="logo"><img src="../img/tx6-icon-ink.svg" alt=""><div><h2>Texas 6 BBQ</h2><span class="label">Site admin</span></div></div>
+    <p class="muted">Enter the admin password to edit prices, photos and wording on the website.</p>
+    <input id="liEmail" type="hidden" autocomplete="username" value="">
     <label class="f"><span>Password</span><input id="liPass" type="password" autocomplete="current-password" required></label>
     <p class="err-text" id="liErr" role="alert"></p>
     <button class="btn primary" type="submit" id="liBtn">Sign in</button>
@@ -166,7 +166,7 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
       <button class="tab" role="tab" data-tab="media" aria-selected="false">Photos &amp; videos</button>
       <button class="tab" role="tab" data-tab="text" aria-selected="false">Wording</button>
       <button class="tab" role="tab" data-tab="facebook" aria-selected="false">Facebook</button>
-      <button class="tab" role="tab" data-tab="people" aria-selected="false">Admins</button>
+      <button class="tab" role="tab" data-tab="people" aria-selected="false">Password</button>
     </div></nav>
   </header>
 
@@ -221,9 +221,9 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
 
     <!-- PEOPLE -->
     <section data-panel="people" hidden>
-      <div class="panel-head"><div><h2>Admins</h2><p class="muted">People who can sign in here.</p></div></div>
-      <div class="card stack"><div class="admins" id="adminList"></div></div>
-      <form class="card stack" id="addAdmin" style="margin-top:16px" novalidate>
+      <div class="panel-head"><div><h2>Admin password</h2><p class="muted">Everyone signs in with the same password. Changing it here signs nobody out, but the old password stops working right away.</p></div></div>
+      <div class="card stack" hidden><div class="admins" id="adminList"></div></div>
+      <form class="card stack" id="addAdmin" style="margin-top:16px" novalidate hidden>
         <h3>Add someone</h3>
         <div class="two">
           <label class="f"><span>Their email</span><input id="aaEmail" type="email" autocomplete="off"></label>
@@ -233,7 +233,7 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
         <div><button class="btn primary" type="submit">Give access</button></div>
       </form>
       <form class="card stack" id="myPass" style="margin-top:16px" novalidate>
-        <h3>Change my password</h3>
+        <h3>Change the admin password</h3>
         <label class="f"><span>New password</span><input id="mpPass" type="password" autocomplete="new-password" placeholder="8+ characters"></label>
         <div><button class="btn" type="submit">Update password</button></div>
       </form>

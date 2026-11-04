@@ -29,9 +29,9 @@
   $('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     $('liErr').textContent = ''; $('liBtn').disabled = true; $('liBtn').textContent = 'Signing in…';
-    var r = await sb.auth.signInWithPassword({ email: $('liEmail').value.trim(), password: $('liPass').value });
+    var r = await sb.auth.signInWithPassword({ email: CFG.adminEmail, password: $('liPass').value });
     $('liBtn').disabled = false; $('liBtn').textContent = 'Sign in';
-    if (r.error) { $('liErr').textContent = r.error.message === 'Invalid login credentials' ? 'That email and password don’t match. Check both and try again.' : r.error.message; return; }
+    if (r.error) { $('liErr').textContent = r.error.message === 'Invalid login credentials' ? 'That password isn’t right. Check it and try again.' : r.error.message; return; }
     enter();
   });
   $('signOut').addEventListener('click', async function () {
@@ -44,11 +44,11 @@
     if (ok.error || ok.data !== true) {
       await sb.auth.signOut();
       $('loginView').hidden = false; $('appView').hidden = true;
-      $('liErr').textContent = 'This account isn’t an admin. Ask an existing admin to add you.';
+      $('liErr').textContent = 'That login doesn’t have admin access.';
       return;
     }
     $('loginView').hidden = true; $('appView').hidden = false;
-    loadMenu(); loadMedia(); loadText(); loadFacebook(); loadAdmins();
+    loadMenu(); loadMedia(); loadText(); loadFacebook();
   }
   sb.auth.getSession().then(function (r) { if (r.data.session) enter(); });
 
@@ -396,6 +396,6 @@
     var p = $('mpPass').value;
     if (p.length < 8) return toast('Use at least 8 characters.', true);
     var r = await sb.auth.updateUser({ password: p });
-    toast(r.error ? r.error.message : 'Password updated.', !!r.error); if (!r.error) $('mpPass').value = '';
+    toast(r.error ? r.error.message : 'Admin password changed. Share the new one with Casey and Jammie.', !!r.error); if (!r.error) $('mpPass').value = '';
   });
 })();
