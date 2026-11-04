@@ -101,6 +101,7 @@
   function renderMenu() {
     ['special', 'meat', 'side'].forEach(function (cat) {
       var list = $(cat + 'List');
+      if (!list) return;
       var idx = menu.map(function (m, i) { return i; }).filter(function (i) { return menu[i].category === cat; });
       if (!idx.length) { list.innerHTML = '<div class="empty">No ' + ({ meat: 'meats', side: 'sides', special: 'specials right now' })[cat] + ' yet.</div>'; return; }
       list.innerHTML = idx.map(function (i, n) {
@@ -122,6 +123,7 @@
   function markMenu() { dirty.menu = true; refreshBar(); }
   ['specialList', 'meatList', 'sideList'].forEach(function (id) {
     var el = $(id);
+    if (!el) return;
     el.addEventListener('input', function (e) {
       var t = e.target; if (!t.dataset.k) return;
       var m = menu[+t.dataset.i], k = t.dataset.k;
