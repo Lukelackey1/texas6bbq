@@ -69,11 +69,12 @@
   /* ---------- Save bar (menu + wording) ---------- */
   var dirty = { menu: false, text: false };
   function refreshBar() {
-    var n = (dirty.menu ? 1 : 0) + (dirty.text ? 1 : 0);
+    // The menu and wording editors now live on the site itself (?edit); Settings has nothing to save by hand.
+    var n = document.querySelector('[data-panel="menu"] [hidden] #meatList') ? 0 : (dirty.menu ? 1 : 0) + (dirty.text ? 1 : 0);
     $('saveBar').classList.toggle('show', n > 0);
     $('saveMsg').textContent = dirty.menu && dirty.text ? 'Unsaved menu and wording changes' : dirty.menu ? 'Unsaved menu changes' : 'Unsaved wording changes';
   }
-  addEventListener('beforeunload', function (e) { if (dirty.menu || dirty.text) { e.preventDefault(); e.returnValue = ''; } });
+  addEventListener('beforeunload', function (e) { if ($('saveBar').classList.contains('show') && (dirty.menu || dirty.text)) { e.preventDefault(); e.returnValue = ''; } });
   $('discard').addEventListener('click', function () { if (dirty.menu) loadMenu(); if (dirty.text) loadText(); });
   $('saveBtn').addEventListener('click', async function () {
     var b = $('saveBtn'); b.disabled = true; b.textContent = 'Saving…';

@@ -198,7 +198,8 @@ section{padding-block:76px}
 .pit-pic figcaption{font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.74rem;color:var(--pit-soft);padding:10px 14px;background:var(--pit)}
 .owners .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .own-pics{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:end}
-.own-pics figure{margin:0;border-radius:4px;overflow:hidden}
+.own-pics figure{margin:0;border-radius:4px;overflow:hidden;position:relative}
+.own-pics:has(figure[hidden]){grid-template-columns:1fr}
 .own-pics img{width:100%;height:auto;display:block}
 .op-b{margin-bottom:-28px!important}
 .own-copy p{margin:0 0 14px;max-width:54ch;color:var(--ink-soft)}
@@ -353,7 +354,7 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
 <main>
   <section id="menu">
     <div class="wrap">
-      <div class="head"><div><span class="label eyebrow">Catering menu</span><h2 class="h2" data-edit="menu_heading" data-label="Menu heading" data-section="Menu">How to order</h2></div>
+      <div class="head"><div><span class="label eyebrow" data-edit="menu_label" data-label="Menu label" data-section="Menu">Catering menu</span><h2 class="h2" data-edit="menu_heading" data-label="Menu heading" data-section="Menu">How to order</h2></div>
         <p data-edit="menu_intro" data-label="Menu intro" data-section="Menu">Our Thanksgiving menu is below. Lock your dates in now.</p></div>
       <div class="special" id="special">
         <div class="special-copy">
@@ -424,10 +425,10 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
         <div class="stars" aria-label="Recommended">★★★★★</div>
         <p data-edit="review_quote" data-label="Review quote" data-section="Review" data-multiline>“If you need a caterer for your next event, Texas 6 BBQ is where it’s at! They took care of every detail and our guests raved about the food! Best choice ever!”</p>
         <cite class="label" data-edit="review_cite" data-label="Review credit" data-section="Review">Texas 6 customer · Facebook</cite>
-        <figure class="pit-pic"><img src="img/trailer.jpg" width="1200" height="900" alt="The Texas 6 trailer smoker" loading="lazy"><figcaption>The Texas 6 pit</figcaption></figure>
+        <figure class="pit-pic" data-photo="pit_photo"><img data-img="pit_photo" src="img/trailer.jpg" width="1200" height="900" alt="The Texas 6 trailer smoker" loading="lazy"><figcaption data-edit="pit_caption" data-label="Pit photo caption" data-section="Review">The Texas 6 pit</figcaption></figure>
       </div>
       <div class="about">
-        <span class="label eyebrow">About Texas 6</span>
+        <span class="label eyebrow" data-edit="about_label" data-label="About label" data-section="About">About Texas 6</span>
         <h2 class="h2" style="margin-bottom:18px" data-edit="about_heading" data-label="About heading" data-section="About">This is what it’s all about.</h2>
         <p data-edit="about_p1" data-label="About paragraph 1" data-section="About" data-multiline>Texas 6 BBQ is family owned and operated by Casey and Jammie Hall right here in Waco, cooking since 2023. We cook true Texas smoked BBQ: real wood, low and slow, with rubs and sides made without sugar.</p>
         <p data-edit="about_p2" data-label="About paragraph 2" data-section="About" data-multiline>We cater graduation parties, get-togethers, rehearsal dinners and family lunches, and we deliver.</p>
@@ -438,11 +439,11 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
   <section class="owners" id="owners">
     <div class="wrap">
       <div class="own-pics">
-        <figure class="op-a"><img src="img/owners.jpg" width="1088" height="1100" alt="Casey and Jammie Hall on their wedding day" loading="lazy"></figure>
-        <figure class="op-b"><img src="img/casey-grill.jpg" width="1000" height="1230" alt="Casey Hall cooking on the griddle" loading="lazy"></figure>
+        <figure class="op-a" data-photo="owners_photo_1"><img data-img="owners_photo_1" src="img/owners.jpg" width="1088" height="1100" alt="Casey and Jammie Hall on their wedding day" loading="lazy"></figure>
+        <figure class="op-b" data-photo="owners_photo_2"><img data-img="owners_photo_2" src="img/casey-grill.jpg" width="1000" height="1230" alt="Casey Hall cooking on the griddle" loading="lazy"></figure>
       </div>
       <div class="own-copy">
-        <span class="label eyebrow">Meet the family</span>
+        <span class="label eyebrow" data-edit="owners_label" data-label="Family label" data-section="Meet the family">Meet the family</span>
         <h2 class="h2" data-edit="owners_heading" data-label="Family heading" data-section="Meet the family">Casey &amp; Jammie Hall</h2>
         <p class="lead2" data-edit="owners_lead" data-label="Family intro" data-section="Meet the family" data-multiline>Texas 6 is a husband-and-wife business, family owned and operated in Waco since 2023.</p>
         <p data-edit="owners_p" data-label="Family paragraph" data-section="Meet the family" data-multiline>When you call or text to order, you’re talking to Casey directly. Every brisket, rack of ribs and pan of sides comes from their family to yours.</p>
@@ -452,7 +453,7 @@ footer .fine{grid-column:1/-1;font-size:.82rem;color:rgba(246,241,234,.5);border
 
   <section class="fb on-dark" id="facebook">
     <div class="wrap">
-      <div class="head"><div><span class="label eyebrow">Latest from Facebook</span><h2 class="h2" data-edit="fb_heading" data-label="Facebook section heading" data-section="Facebook">Fresh off the pit</h2></div>
+      <div class="head"><div><span class="label eyebrow" data-edit="fb_label" data-label="Facebook label" data-section="Facebook">Latest from Facebook</span><h2 class="h2" data-edit="fb_heading" data-label="Facebook section heading" data-section="Facebook">Fresh off the pit</h2></div>
         <p data-edit="fb_intro" data-label="Facebook section intro" data-section="Facebook" data-multiline>What Casey and Jammie are cooking this week, straight from the Texas 6 Facebook page.</p></div>
       <div class="fb-grid" id="fbPosts" hidden></div>
       <div class="fb-follow" id="fbEmbed">
@@ -501,7 +502,7 @@ True Texas smoked BBQ.</p></div>
   <div class="f-serve"><span class="label">Serving</span><p>Waco, Texas</p><p><a href="https://www.facebook.com/profile.php?id=100092064403815">Facebook</a></p></div>
   <div class="fine">© 2026 Texas 6 BBQ · Waco, TX</div>
 </div></footer>
-<script src="assets/config.js?v=1793817163"></script>
-<script src="assets/site.js?v=1793817163"></script>
+<script src="assets/config.js?v=1793819795"></script>
+<script src="assets/site.js?v=1793819795"></script>
 </body>
 </html>

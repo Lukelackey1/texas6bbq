@@ -237,6 +237,12 @@
       var k = el.getAttribute('data-edit');
       if (Object.prototype.hasOwnProperty.call(map, k)) el.innerHTML = rich(map[k]);
     });
+    document.querySelectorAll('img[data-img]').forEach(function (img) {
+      var k = img.getAttribute('data-img'); if (!Object.prototype.hasOwnProperty.call(map, k)) return;
+      var fig = img.closest('[data-photo]');
+      if (map[k]) { if (img.getAttribute('src') !== map[k]) { img.removeAttribute('width'); img.removeAttribute('height'); img.src = map[k]; } if (fig) fig.hidden = false; }
+      else if (fig) fig.hidden = true;
+    });
     if (map.phone) {
       state.phone = map.phone;
       document.querySelectorAll('[data-bind="phone"]').forEach(function (el) { el.textContent = map.phone; });

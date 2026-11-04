@@ -37,6 +37,13 @@
     '.on-dark .e-mini,.reel .e-mini,.special .e-mini{background:#1d1918;color:#f6f1ea;border-color:rgba(246,241,234,.25)}',
     '.e-add{margin-top:10px}',
     '.e-hidden{opacity:.5}',
+    '[data-photo]{position:relative}',
+    '.e-phbar{position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;z-index:3}',
+    '.e-phbar .e-mini{background:rgba(15,13,13,.85);color:#f6f1ea;border-color:rgba(246,241,234,.3)}',
+    '.e-phbar label.e-mini{display:inline-flex;align-items:center;cursor:pointer}',
+    '.e-phbar .e-tag{background:#fffdf9;margin-left:0;align-self:center}',
+    '[data-photo].e-hidden img{opacity:.3}',
+    '[data-photo].e-uploading img{opacity:.4}',
     '.e-tag{display:inline-block;font-family:"Archivo Narrow",Arial,sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.66rem;padding:3px 7px;border-radius:999px;border:1px solid currentColor;color:#a8201f;margin-left:6px;vertical-align:middle}',
     '.reel .e-tag,.special .e-tag{color:#e0544b}',
     '.e-lbl{font-family:"Archivo Narrow",Arial,sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.66rem;opacity:.6;margin-right:4px}',
@@ -108,6 +115,7 @@
     renderMenu();
     renderMedia(0);
     decorateBanner();
+    decoratePhotos();
     var fb = document.querySelector('#facebook .wrap');
     if (fb) fb.insertAdjacentHTML('beforeend', '<p class="e-note">Facebook posts, flyer price reading and the admin password are under Settings.</p>');
     try { if (!localStorage.getItem('t6EditTip')) showTip(); } catch (e) { showTip(); }
@@ -166,6 +174,46 @@
         text[key] = v; var patch = {}; patch[key] = v; T6.applyText(patch);
         save(sb.from('site_text').update({ value: v }).eq('key', key), key === 'phone' ? 'Saved. Call and text buttons use the new number.' : 'Saved.');
       });
+    });
+  }
+
+  /* ---------- Section photos (pit, family) ---------- */
+  function decoratePhotos() {
+    document.querySelectorAll('[data-photo]').forEach(function (fig) {
+      var key = fig.getAttribute('data-photo'), img = fig.querySelector('img[data-img]');
+      var last = text[key] || img.getAttribute('src');
+      var bar = document.createElement('div'); bar.className = 'e-phbar'; fig.appendChild(bar);
+      var paint = function () {
+        var off = !text[key];
+        fig.hidden = false; fig.classList.toggle('e-hidden', off);
+        bar.innerHTML = '<label class="e-mini">' + (off ? 'Add a photo' : 'Replace photo') + '<input type="file" accept="image/*" hidden></label>' +
+          (off ? (last ? '<button class="e-mini" type="button" data-ph="restore">Put it back</button>' : '') + '<span class="e-tag">Hidden on the live site</span>'
+               : '<button class="e-mini danger" type="button" data-ph="remove">Remove</button>');
+      };
+      bar.addEventListener('change', async function (e) {
+        var file = e.target.files && e.target.files[0]; e.target.value = ''; if (!file) return;
+        fig.classList.add('e-uploading'); toast('Uploading…');
+        try {
+          var ph = await preparePhoto(file), path = 'site/' + key + '-' + uuid() + '.' + ph.ext;
+          var up = await sb.storage.from('media').upload(path, ph.blob, { contentType: ph.type, upsert: true }); if (up.error) throw up.error;
+          var url = sb.storage.from('media').getPublicUrl(path).data.publicUrl;
+          await save(sb.from('site_text').update({ value: url }).eq('key', key), 'Photo replaced.');
+          text[key] = last = url; img.removeAttribute('width'); img.removeAttribute('height'); img.src = url; paint();
+        } catch (err) { toast('Couldn’t replace the photo: ' + (err.message || err), true); }
+        fig.classList.remove('e-uploading');
+      });
+      bar.addEventListener('click', async function (e) {
+        var b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.ph === 'remove') {
+          if (!armed(b, 'Tap to remove')) return;
+          last = text[key]; text[key] = '';
+          await save(sb.from('site_text').update({ value: '' }).eq('key', key), 'Photo removed from the site.'); paint();
+        } else if (b.dataset.ph === 'restore') {
+          text[key] = last; img.src = last;
+          await save(sb.from('site_text').update({ value: last }).eq('key', key), 'Photo is back.'); paint();
+        }
+      });
+      paint();
     });
   }
 

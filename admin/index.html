@@ -187,9 +187,7 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
       <div class="bar-actions"><a class="btn ghost-dark" href="../?edit">Edit the site</a><button class="btn ghost-dark" id="signOut" type="button">Sign out</button></div>
     </div>
     <nav class="tabs" aria-label="Sections"><div class="wrap" role="tablist">
-      <button class="tab" role="tab" data-tab="menu" aria-selected="true">Menu &amp; prices</button>
-      <button class="tab" role="tab" data-tab="media" aria-selected="false">Photos &amp; videos</button>
-      <button class="tab" role="tab" data-tab="text" aria-selected="false">Wording</button>
+      <button class="tab" role="tab" data-tab="menu" aria-selected="true">New prices</button>
       <button class="tab" role="tab" data-tab="facebook" aria-selected="false">Facebook</button>
       <button class="tab" role="tab" data-tab="people" aria-selected="false">Password</button>
     </div></nav>
@@ -198,7 +196,7 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
   <main class="wrap">
     <!-- MENU -->
     <section data-panel="menu">
-      <div class="panel-head"><div><h2>Menu &amp; prices</h2><p class="muted">These show on the menu and in the estimate builder. Leave a price blank to hide that option. The holiday banner’s wording is under Wording.</p></div></div>
+      <div class="panel-head"><div><h2>New prices</h2><p class="muted">Prices read from Facebook posts or a flyer wait here for you to check before they go on the site. To change the menu, prices, photos or wording by hand, tap <b>Edit the site</b> and edit them right on the page.</p></div></div>
       <div id="suggestBox"></div>
       <label class="card flyer" id="flyerDrop">
         <div><h3>Got a flyer?</h3><p class="hint">Upload a picture of a price flyer and the prices are pulled out for you to review. New Facebook posts are read automatically once Facebook is connected.</p></div>
@@ -206,14 +204,16 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
         <input id="flyerIn" type="file" accept="image/*" hidden>
       </label>
       <p class="hint" id="flyerStatus" role="status"></p>
+      <div hidden>
       <div class="group"><span class="label">Meats</span><div class="items" id="meatList"></div>
         <button class="btn small" type="button" data-add="meat" style="margin-top:12px">+ Add a meat</button></div>
       <div class="group"><span class="label">Sides</span><div class="items" id="sideList"></div>
         <button class="btn small" type="button" data-add="side" style="margin-top:12px">+ Add a side</button></div>
+      </div>
     </section>
 
     <!-- MEDIA -->
-    <section data-panel="media" hidden>
+    <section data-panel="media" hidden data-retired>
       <div class="panel-head"><div><h2>Photos &amp; videos</h2><p class="muted">The home page carousel, in this order. Hidden items stay here but don’t show on the site.</p></div></div>
       <label class="drop" id="drop">
         <strong>Add photos or videos</strong>
@@ -226,7 +226,7 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
     </section>
 
     <!-- TEXT -->
-    <section data-panel="text" hidden>
+    <section data-panel="text" hidden data-retired>
       <div class="panel-head"><div><h2>Wording</h2><p class="muted">Every line of text on the site. Wrap words in **double stars** to make them bold.</p></div></div>
       <div id="textGroups"></div>
     </section>
@@ -279,6 +279,6 @@ ol.steps{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="../assets/config.js?v=1793816125"></script>
-<script src="admin.js?v=1793817163"></script>
+<script src="admin.js?v=1793819950"></script>
 </body>
 </html>
