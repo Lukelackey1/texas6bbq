@@ -16,6 +16,14 @@ Website for Texas 6 BBQ, a family owned and operated BBQ caterer in Waco, TX (Ca
 | Facebook | `fb_posts` table, `fb-sync` function | Synced hourly by `pg_cron`. Until a Page token is set, the site shows Facebook's Page Plugin widget instead. |
 | Admins | `admins` table, `manage-admins` function | Only emails in `admins` can write (enforced by row level security). |
 
+## Reading prices from posts and flyers
+
+New Facebook posts (and flyers uploaded on the Menu tab) are read by Claude via `read-prices` / `fb-sync`. Found prices become a **pending suggestion** in the admin portal; nothing changes on the site until an admin taps **Apply to menu** (replace the menu, or add to it). Needs an `ANTHROPIC_API_KEY` secret in Supabase. Optional `ANTHROPIC_MODEL` overrides the default model.
+
+## Facebook photos and videos
+
+Each synced post in the admin Facebook tab has **Add photo/video to the site**, which copies it into Storage and the carousel (`import-fb-media`).
+
 ## Connecting Facebook auto-sync
 
 1. A Page admin creates a Meta app at developers.facebook.com and generates a long-lived **Page access token** with `pages_read_engagement`.

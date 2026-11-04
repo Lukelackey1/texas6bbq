@@ -48,7 +48,7 @@
       return;
     }
     $('loginView').hidden = true; $('appView').hidden = false;
-    loadMenu(); loadMedia(); loadText(); loadFacebook();
+    loadMenu().then(loadSuggestions); loadMedia().then(loadFacebook); loadText();
   }
   sb.auth.getSession().then(function (r) { if (r.data.session) enter(); });
 
@@ -332,6 +332,7 @@
     var log = await sb.from('sync_log').select('*').order('ran_at', { ascending: false }).limit(1);
     var posts = await sb.from('fb_posts').select('*').order('created_time', { ascending: false }).limit(30);
     var last = log.data && log.data[0], list = posts.data || [];
+    var inCarousel = {}; media.forEach(function (m) { if (m.fb_post_id) inCarousel[m.fb_post_id] = true; });
     var connected = last && last.ok;
     $('fbStatus').classList.toggle('ok', !!connected);
     $('fbStatusTitle').textContent = connected ? 'Connected. Posts sync every hour.' : list.length ? 'Last sync had a problem' : 'Showing Facebook’s feed widget';
@@ -340,9 +341,27 @@
     $('postList').innerHTML = list.length ? list.map(function (p) {
       return '<div class="card post">' + (p.image_url ? '<img src="' + esc(p.image_url) + '" alt="">' : '<img alt="">') +
         '<div><time>' + new Date(p.created_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '</time><p>' + esc(p.message || '(photo only)') + '</p></div>' +
-        '<label class="toggle"><input type="checkbox" data-post="' + esc(p.id) + '"' + (p.hidden ? '' : ' checked') + '> Show</label></div>';
+        '<label class="toggle"><input type="checkbox" data-post="' + esc(p.id) + '"' + (p.hidden ? '' : ' checked') + '> Show</label>' +
+        '<div class="post-actions"><button class="btn small" type="button" data-read="' + esc(p.id) + '">Read prices</button>' +
+        (inCarousel[p.id] ? '<span class="pill on">In photos &amp; videos</span>' : '<button class="btn small" type="button" data-import="' + esc(p.id) + '">Add ' + (p.media_kind === 'video' ? 'video' : 'photo') + ' to the site</button>') + '</div></div>';
     }).join('') : '<div class="empty">No posts synced yet.</div>';
   }
+  $('postList').addEventListener('click', async function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var orig = b.textContent; b.disabled = true;
+    if (b.dataset.read) {
+      b.textContent = 'Reading…';
+      var r = await callFn('read-prices', { post_id: b.dataset.read });
+      toast(r.message || r.error, !!r.error);
+      if (r.found) { loadSuggestions(); showTab('menu'); }
+    } else if (b.dataset.import) {
+      b.textContent = 'Adding…';
+      var r2 = await callFn('import-fb-media', { post_id: b.dataset.import });
+      toast(r2.message || r2.error, !!r2.error);
+      if (r2.ok) { await loadMedia(); loadFacebook(); }
+    }
+    b.disabled = false; b.textContent = orig;
+  });
   $('postList').addEventListener('change', async function (e) {
     var id = e.target.dataset.post; if (!id) return;
     var r = await sb.from('fb_posts').update({ hidden: !e.target.checked }).eq('id', id);
@@ -354,6 +373,114 @@
     b.disabled = false; b.textContent = 'Sync now';
     var msg = r.data && r.data.message ? r.data.message : r.error ? r.error.message : 'Done.';
     toast(msg, !(r.data && r.data.ok)); loadFacebook();
+  });
+
+  async function callFn(name, body) {
+    var r = await sb.functions.invoke(name, { body: body });
+    if (r.error) {
+      var detail = '';
+      try { detail = (await r.error.context.json()).error; } catch (e) {}
+      return { error: detail || r.error.message };
+    }
+    return r.data || {};
+  }
+
+  /* ---------- Price suggestions ---------- */
+  var suggestions = [];
+  async function loadSuggestions() {
+    var r = await sb.from('price_suggestions').select('*').eq('status', 'pending').order('created_at', { ascending: false });
+    suggestions = r.data || []; renderSuggestions();
+  }
+  function renderSuggestions() {
+    var box = $('suggestBox');
+    box.innerHTML = suggestions.map(function (sg, si) {
+      var when = new Date(sg.post_date || sg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var title = sg.source === 'facebook' ? 'New prices found in the Facebook post from ' + when : 'Prices read from your flyer';
+      var rows = sg.items.map(function (it, ii) {
+        var cur = menu.find(function (m) { return m.name.trim().toLowerCase() === it.name.trim().toLowerCase(); });
+        var was = cur ? (cur.whole_price !== null && Number(cur.whole_price) !== Number(it.price) ? 'Now $' + Number(cur.whole_price) + ' on the menu' : 'Already on the menu') + (cur.active ? '' : ' (hidden)') : 'New item';
+        return '<div class="srow" data-s="' + si + '" data-i="' + ii + '"><input type="checkbox" checked aria-label="Include ' + esc(it.name) + '" data-k="use">' +
+          '<input class="sn" data-k="name" value="' + esc(it.name) + '" aria-label="Name">' +
+          '<div class="money"><input inputmode="decimal" data-k="price" value="' + esc(it.price) + '" aria-label="Price"></div>' +
+          '<input data-k="note" value="' + esc(it.note) + '" placeholder="Size" aria-label="Size">' +
+          '<select data-k="category" aria-label="Meat or side"><option value="meat"' + (it.category === 'meat' ? ' selected' : '') + '>Meat</option><option value="side"' + (it.category === 'side' ? ' selected' : '') + '>Side</option></select>' +
+          '<span class="was">' + esc(was) + '</span></div>';
+      }).join('');
+      var banner = (sg.banner_heading || sg.banner_text)
+        ? '<label class="toggle"><input type="checkbox" data-banner checked> Also update the holiday banner: <b>' + esc(sg.banner_heading) + '</b></label><textarea data-bannertext rows="2">' + esc(sg.banner_text) + '</textarea>'
+        : '';
+      return '<div class="sugg" data-s="' + si + '">' +
+        '<div class="sugg-head">' + (sg.image_url ? '<a href="' + esc(sg.image_url) + '" target="_blank" rel="noopener"><img src="' + esc(sg.image_url) + '" alt="The post the prices came from"></a>' : '') +
+        '<div><span class="pill">Needs review</span><h3 style="margin-top:6px">' + esc(title) + '</h3><p class="hint">Check each price against the picture, untick anything you don’t want, then apply.</p></div></div>' +
+        '<div class="srow srow-head"><span></span><span>Item</span><span>Price</span><span>Size</span><span>Type</span></div>' + rows + banner +
+        '<div class="modes"><label><input type="radio" name="mode' + si + '" value="replace" checked><span><b>Replace the menu with these</b><br><span class="hint">Everything else gets hidden (not deleted). Good for a holiday or seasonal menu.</span></span></label>' +
+        '<label><input type="radio" name="mode' + si + '" value="add"><span><b>Add to the menu</b><br><span class="hint">Updates matching items and adds new ones. The rest stays as it is.</span></span></label></div>' +
+        '<div class="sugg-actions"><button class="btn danger" type="button" data-dismiss="' + si + '">Dismiss</button><button class="btn primary" type="button" data-apply="' + si + '">Apply to menu</button></div></div>';
+    }).join('');
+  }
+  $('suggestBox').addEventListener('input', function (e) {
+    var row = e.target.closest('.srow'); if (!row || !e.target.dataset.k) return;
+    var it = suggestions[+row.dataset.s].items[+row.dataset.i], k = e.target.dataset.k;
+    if (k === 'use') { it._skip = !e.target.checked; row.classList.toggle('off', it._skip); return; }
+    it[k] = k === 'price' ? num(e.target.value) : e.target.value;
+  });
+  $('suggestBox').addEventListener('click', async function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.dismiss) {
+      if (!armed(b, 'Tap again to dismiss')) return;
+      var sg = suggestions[+b.dataset.dismiss];
+      await sb.from('price_suggestions').update({ status: 'dismissed', decided_at: new Date().toISOString() }).eq('id', sg.id);
+      toast('Dismissed. The menu wasn’t changed.'); loadSuggestions();
+    } else if (b.dataset.apply) {
+      if (dirty.menu) return toast('Save or undo your other menu edits first.', true);
+      var card = b.closest('.sugg'), sg2 = suggestions[+b.dataset.apply];
+      var mode = card.querySelector('input[name="mode' + b.dataset.apply + '"]:checked').value;
+      var bannerBox = card.querySelector('[data-banner]');
+      b.disabled = true; b.textContent = 'Applying…';
+      try { await applySuggestion(sg2, mode, bannerBox && bannerBox.checked ? { heading: sg2.banner_heading, text: card.querySelector('[data-bannertext]').value } : null); toast('Menu updated. The live site shows it now.'); }
+      catch (err) { toast('Couldn’t apply: ' + (err.message || err), true); b.disabled = false; b.textContent = 'Apply to menu'; }
+    }
+  });
+  async function applySuggestion(sg, mode, banner) {
+    var items = sg.items.filter(function (it) { return !it._skip; });
+    if (!items.length) throw new Error('nothing is ticked');
+    items.forEach(function (it) { if (!String(it.name || '').trim() || it.price === null || isNaN(it.price)) throw new Error('“' + (it.name || 'an item') + '” needs a name and a price'); });
+    var key = function (n) { return String(n).trim().toLowerCase(); };
+    var wanted = {}; items.forEach(function (it) { wanted[key(it.name)] = true; });
+    var rows = [], sorts = { meat: 0, side: 0 };
+    items.forEach(function (it) {
+      var cur = menu.find(function (m) { return key(m.name) === key(it.name); });
+      var row = cur ? Object.assign({}, cur) : { id: uuid(), half_price: null, half_note: '', lb_price: null };
+      Object.assign(row, { name: it.name.trim(), category: it.category, whole_price: it.price, whole_note: it.note || '', active: true, sort: sorts[it.category]++ });
+      if (mode === 'replace') { row.half_price = null; row.half_note = ''; row.lb_price = null; }
+      delete row.updated_at; delete row._new; rows.push(row);
+    });
+    menu.forEach(function (m) {
+      if (wanted[key(m.name)] || m.category === 'special') return;
+      var keep = { id: m.id, category: m.category, name: m.name, whole_price: m.whole_price, whole_note: m.whole_note, half_price: m.half_price, half_note: m.half_note, lb_price: m.lb_price,
+        active: mode === 'replace' ? false : m.active, sort: m.active && mode === 'add' ? sorts[m.category]++ : 100 + (m.sort || 0) };
+      rows.push(keep);
+    });
+    var u = await sb.from('menu_items').upsert(rows); if (u.error) throw u.error;
+    if (banner) {
+      var a = await sb.from('site_text').update({ value: banner.heading }).eq('key', 'special_heading');
+      var c = await sb.from('site_text').update({ value: banner.text }).eq('key', 'special_text');
+      if (a.error || c.error) throw (a.error || c.error);
+      loadText();
+    }
+    await sb.from('price_suggestions').update({ status: 'applied', decided_at: new Date().toISOString() }).eq('id', sg.id);
+    await loadMenu(); loadSuggestions();
+  }
+  $('flyerIn').addEventListener('change', async function (e) {
+    var f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    $('flyerStatus').textContent = 'Reading the flyer… this takes about 10 seconds.';
+    try {
+      var ph = await preparePhoto(f);
+      var b64 = await new Promise(function (res) { var fr = new FileReader(); fr.onload = function () { res(String(fr.result).split(',')[1]); }; fr.readAsDataURL(ph.blob); });
+      var r = await callFn('read-prices', { image_base64: b64, media_type: ph.type });
+      $('flyerStatus').textContent = r.error || r.message;
+      if (r.found) loadSuggestions();
+    } catch (err) { $('flyerStatus').textContent = 'Couldn’t read that flyer: ' + (err.message || err); }
   });
 
   /* ---------- Admins ---------- */
