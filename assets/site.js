@@ -24,18 +24,12 @@
   var state = {
     phone: '(979) 627-3285',
     menu: [
-      { category: 'meat', name: 'Brisket', whole_price: 200, whole_note: '10+ lbs', half_price: 100, half_note: '', lb_price: 28 },
-      { category: 'meat', name: 'Pulled Pork', whole_price: 80, whole_note: '8+ lbs', lb_price: 15 },
-      { category: 'meat', name: 'Turkey Breast', whole_price: 60, whole_note: '3+ lbs', lb_price: 20 },
-      { category: 'meat', name: 'Baby Back Ribs', whole_price: 35, whole_note: 'full rack', half_price: 18, half_note: 'half rack' },
-      { category: 'meat', name: 'Chicken Quarters', whole_price: 18, whole_note: '6 quarters' },
-      { category: 'meat', name: 'Country Ribs', whole_price: 20, whole_note: '6 ribs' },
-      { category: 'side', name: 'Pan Fried Potatoes', whole_price: 18 },
-      { category: 'side', name: 'Green Beans', whole_price: 24 },
-      { category: 'side', name: 'Ranch Beans', whole_price: 20 },
-      { category: 'side', name: 'Banana Pudding', whole_price: 32 }
-    ]
-  };
+      { category: 'special', name: 'Whole Brisket', whole_price: 200, whole_note: '12–16 lb' },
+      { category: 'special', name: 'Whole Turkey', whole_price: 75, whole_note: '16–20 lb bird' },
+      { category: 'special', name: 'Pork Tenderloin', whole_price: 80, whole_note: '7–9 lb' },
+      { category: 'special', name: 'Turkey Breast', whole_price: 60, whole_note: '3 lb' },
+      { category: 'special', name: 'Mac-n-Cheese', whole_price: 36, whole_note: '½ pan' }
+    ]  };
   var digits = function () { return state.phone.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, ''); };
 
   /* ---------- Views: home and #estimate ---------- */
@@ -153,6 +147,11 @@
       }
       return '<tr><td>' + esc(m.name) + '</td><td class="p">' + whole + '</td><td class="p">' + second + '</td></tr>';
     }).join('');
+    // Steps with nothing in them disappear; the rest renumber.
+    $('stepMeats').hidden = !meats.length; $('stepSides').hidden = !sides.length;
+    var vis = [].slice.call(document.querySelectorAll('.steps .stepblk')).filter(function (b) { return !b.hidden; });
+    vis.forEach(function (b, i) { b.querySelector('.stepno').textContent = i + 1; });
+    document.querySelector('.steps').classList.toggle('solo', vis.length < 2);
     $('sidesBody').innerHTML = sides.map(function (m) {
       return '<tr><td>' + esc(m.name) + (m.whole_note ? '<small>' + esc(m.whole_note) + '</small>' : '') + '</td><td class="p r">' + (has(m.whole_price) ? money(m.whole_price) : '—') + '</td></tr>';
     }).join('');
@@ -215,14 +214,14 @@
   function renderPosts(posts) {
     var grid = $('fbPosts'), embed = $('fbEmbed');
     posts = (posts || []).filter(function (p) { return p.message || p.image_url; }).slice(0, 6);
-    if (!posts.length) { grid.hidden = true; embed.hidden = false; return; }
+    if (!posts.length) { grid.hidden = true; embed.hidden = false; $('fbMore').hidden = true; return; }
     grid.innerHTML = posts.map(function (p) {
       var date = new Date(p.created_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       return '<a class="fb-card" href="' + esc(p.permalink_url || state.fbUrl || '#') + '" target="_blank" rel="noopener">' +
         (p.image_url ? '<img src="' + esc(p.image_url) + '" alt="" loading="lazy">' : '') +
         '<div class="fb-body"><time datetime="' + esc(p.created_time) + '">' + date + '</time>' + (p.message ? '<p>' + esc(p.message) + '</p>' : '') + '</div></a>';
     }).join('');
-    grid.hidden = false; embed.hidden = true;
+    grid.hidden = false; embed.hidden = true; $('fbMore').hidden = false;
   }
 
   /* ---------- Text from the admin portal ---------- */
@@ -243,8 +242,6 @@
     if (map.facebook_url) {
       state.fbUrl = map.facebook_url;
       document.querySelectorAll('a[href*="facebook.com"]').forEach(function (a) { a.href = map.facebook_url; });
-      var f = document.querySelector('#fbEmbed iframe');
-      if (f) f.src = f.src.replace(/href=[^&]+/, 'href=' + encodeURIComponent(map.facebook_url));
     }
   }
 
@@ -262,7 +259,7 @@
       var map = {}; rows.forEach(function (r) { map[r.key] = r.value; }); applyText(map); buildEstimate();
     }).catch(function () {});
     get('menu_items?select=*&active=eq.true&order=category.asc,sort.asc').then(function (rows) {
-      if (rows.length) { state.menu = rows; renderMenu(); renderEstimate(); }
+      state.menu = rows; renderMenu(); renderEstimate();
     }).catch(function () {});
     get('media?select=*&active=eq.true&order=sort.asc,created_at.asc').then(function (rows) {
       if (!rows.length) return;
